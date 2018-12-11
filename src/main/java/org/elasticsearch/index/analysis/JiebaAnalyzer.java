@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.Tokenizer;
@@ -13,7 +12,6 @@ import org.apache.lucene.analysis.core.StopFilter;
 import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.util.WordlistLoader;
 import org.apache.lucene.util.IOUtils;
-import org.elasticsearch.common.logging.Loggers;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;
 import org.elasticsearch.plugin.analysis.jieba.AnalysisJiebaPlugin;
@@ -21,7 +19,6 @@ import org.elasticsearch.plugin.analysis.jieba.AnalysisJiebaPlugin;
 import com.huaban.analysis.jieba.WordDictionary;
 
 public class JiebaAnalyzer extends Analyzer {
-	private final Logger log = Loggers.getLogger(JiebaAnalyzer.class);
 
 	private final CharArraySet stopWords;
 
@@ -93,10 +90,6 @@ public class JiebaAnalyzer extends Analyzer {
 		WordDictionary.getInstance().init(dataPath);
 		this.stopWords = isStop ? this.loadStopWords(dataPath)
 				: CharArraySet.EMPTY_SET;
-
-		this.log.info("Jieba segMode = {}", type);
-		this.log.info("JiebaAnalyzer isStop = {}", isStop);
-		this.log.info("JiebaAnalyzer stopWords = {}", this.stopWords.toString());
 	}
 
 	@Override
